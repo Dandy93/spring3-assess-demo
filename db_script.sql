@@ -3,10 +3,11 @@ CREATE DATABASE librarydb;
 USE librarydb;
 
 CREATE TABLE `book` (
-  `id` varchar(100) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `author` varchar(100) DEFAULT NULL,
   `status` int NOT NULL,
+  `book_code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `date_created` datetime NOT NULL,
   `date_updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -22,12 +23,22 @@ CREATE TABLE `libstatus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `student` (
-  `id` varchar(100) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `date_created` datetime NOT NULL,
   `date_updated` datetime NOT NULL,
   `status` int NOT NULL,
+  `department_id` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `department` (
+  `id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `code` varchar(100) NOT NULL,
+  `status` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `loan` (
@@ -44,11 +55,11 @@ CREATE TABLE `loan` (
 INSERT INTO 
 	student (id, name, date_created , date_updated, status)
 VALUES
-	('Rudy',NOW(), NOW(), 1),
-	('Christine',NOW(), NOW(), 1),
-	('David',NOW(), NOW(), 1),
-	('Elysia',NOW(), NOW(), 1),
-	('Blaire',NOW(), NOW(), 1);
+	(1, 'Rudy',NOW(), NOW(), 1),
+	(2, 'Christine',NOW(), NOW(), 1),
+	(3, 'David',NOW(), NOW(), 1),
+	(4, 'Elysia',NOW(), NOW(), 1),
+	(5, 'Blaire',NOW(), NOW(), 1);
 	
 INSERT INTO 
 	libstatus (id, name, code, date_created , date_updated)
@@ -60,8 +71,8 @@ VALUES
 	(5,'NonAvailable',5,NOW(),NOW());
 
 INSERT INTO 
-	book (id, name, author, status, date_created , date_updated)
+	book (id, name, author, book_code, status, date_created , date_updated)
 VALUES
-	('BL0001','How to Mitigate Stress','Raiden Mei',4, NOW(), NOW()),
-	('BL0002','Outer Disciples','Ginga',4, NOW(), NOW()),
-	('BL0003','Way of The Wind','Michael Straw',4, NOW(),NOW());
+	(1, 'How to Mitigate Stress','Raiden Mei','BL0001',4, NOW(), NOW()),
+	(2, 'Outer Disciples','Ginga','BL0002',4, NOW(), NOW()),
+	(3, 'Way of The Wind','Michael Straw','BL0003',4, NOW(),NOW());

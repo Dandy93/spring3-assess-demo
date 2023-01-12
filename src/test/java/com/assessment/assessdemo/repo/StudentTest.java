@@ -1,4 +1,4 @@
-package repo;
+package com.assessment.assessdemo.repo;
 
 import java.util.List;
 
@@ -9,8 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import models.Student;
-import repo.StudentRepo;
+import com.assessment.assessdemo.models.Student;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
