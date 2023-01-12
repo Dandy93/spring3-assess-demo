@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>List Users</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <p>
+                <b>Welcome</b>
+            </p>
+            <input type="submit" value="To Home" />
+        </form>
+    </div>
+    <div>
+        <h1>List of Books</h1>
+    </div>
+     
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Book ID</th>
+                    <th>Book Name</th>
+                    <th>Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="oBook: ${lBooks}">
+                    <td th:text="${oBook.book_code}">Name</td>
+                    <td th:text="${oBook.name}">Author</td>
+                    <td th:text="${oBook.author}">Loan Code</td>
+                </tr>
+                <h3><a th:href="@{/loanshome}">List of Loans</a></h3>
+                <h3><a th:href="@{/userhome}">List of Students</a></h3>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

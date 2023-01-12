@@ -20,6 +20,7 @@ public class Loan {
     private int status;
     private Timestamp date_created;
     private Timestamp date_updated;
+    
     public int getId() {
         return id;
     }

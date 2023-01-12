@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import com.assessment.assessdemo.models.Book;
+import com.assessment.assessdemo.models.LoanResult;
 import com.assessment.assessdemo.models.Student;
 
 @Controller
@@ -17,6 +19,12 @@ public class ApiController {
 
     @Autowired
     private StudentController oStudentController;
+
+    @Autowired
+    private BookController oBookController;
+
+    @Autowired
+    private LoanController oLoanController;
 
     @GetMapping("")
     public String viewHomePage() {
@@ -34,10 +42,10 @@ public class ApiController {
     }
     
     @GetMapping("/userhome")
-    public String welcome(Model oModel){
+    public String userHomePage(Model oModel){
         List<Student> listUsers = oStudentController.checkAllStudentName();
         oModel.addAttribute("listUsers", listUsers);
-        return "studentviews/userhome";
+        return "studentviews/index";
     }
 
     @GetMapping("/login")
@@ -55,7 +63,7 @@ public class ApiController {
         if(rStudent == null){
             return "index";
         }
-        return "studentviews/userhome";
+        return "redirect:/loanshome";
     }
 
     @GetMapping("/register")
@@ -78,6 +86,20 @@ public class ApiController {
         List<Student> listUsers = oStudentController.checkAllStudentName();
         List<Student> rListUsers = listUsers.stream().filter(s -> s.getStatus() == 1).toList();
         oModel.addAttribute("listUsers", rListUsers);
-        return "studentviews/userhome";
+        return "studentviews/index";
+    }
+
+    @GetMapping("/bookhome")
+    public String bookHomePage(Model oModel){
+        List<Book> lBooks = oBookController.getAllBooks();
+        oModel.addAttribute("lBooks", lBooks);
+        return "bookviews/index";
+    }
+
+    @GetMapping("/loanshome")
+    public String loansHomePage(Model oModel){
+        List<LoanResult> lLoans = oLoanController.getAllLoanList();
+        oModel.addAttribute("lLoans", lLoans);
+        return "loanviews/index";
     }
 }

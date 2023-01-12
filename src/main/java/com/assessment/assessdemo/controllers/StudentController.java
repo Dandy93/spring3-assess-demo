@@ -1,37 +1,37 @@
 package com.assessment.assessdemo.controllers;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.assessment.assessdemo.models.Student;
-import com.assessment.assessdemo.repo.StudentRepo;
+import com.assessment.assessdemo.service.LoanService;
+import com.assessment.assessdemo.service.StudentService;
 
 @Controller
 public class StudentController {
 
     @Autowired
-    private StudentRepo oStudentRepo;
-
+    private StudentService oStudentService;
+    
     @Autowired
-    private Helper oHelper;
+    private LoanService oLoanService;
 
     public List<Student> checkAllStudentName(){
-        return oStudentRepo.findAll();
+        return oStudentService.checkAllStudentName();
     }
 
     public void insertNewStudent(Student oStudent){
-        Timestamp date = oHelper.getCurrentDate();
-        oStudent.setDate_created(date);
-        oStudent.setDate_updated(date);
-        oStudent.setStatus(1);
-        oStudentRepo.save(oStudent);
+        oStudentService.insertNewStudent(oStudent);
     }
 
     public Student getStudent(Student oStudent){
-        Student rStudent = oStudentRepo.getStudent(oStudent.getEmail());
-        return rStudent;
+        return oStudentService.getStudent(oStudent);
+    }
+
+    public int getDoneStudentLoanCredit(Student oStudent){
+        int rCredit =  oLoanService.getStudentCreditFromLoan(oStudent);
+        return rCredit;
     }
 }
