@@ -19,7 +19,9 @@ public class StudentService {
     private Helper oHelper;
 
     public List<Student> checkAllStudentName(){
-        return oStudentRepo.findAll();
+        List<Student> lUsers = oStudentRepo.findAll();
+        List<Student> rListUsers = lUsers.stream().filter(s -> s.getStatus() != LibStatus.Inactive.getStatus() || s.getStatus() != LibStatus.NonAvailable.getStatus()).toList();
+        return rListUsers;
     }
     
     public void insertNewStudent(Student oStudent){
@@ -33,6 +35,17 @@ public class StudentService {
     public Student getStudent(Student oStudent){
         Student rStudent = oStudentRepo.getStudent(oStudent.getEmail());
         return rStudent;
+    }
+
+    public String removeStudent(int studentId){
+        String result = "";
+        try {
+            oStudentRepo.deleteById(studentId);
+            result = "success";
+        } catch (Exception e) {
+            result = "failed";
+        }
+        return result;
     }
 
 }

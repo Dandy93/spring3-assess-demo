@@ -2,10 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>List Users</title>
+    <title th:text="${title}"></title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
 <div class="container text-center">
@@ -18,7 +25,7 @@
         </form>
     </div>
     <div>
-        <h1>List of Users</h1>
+        <h1 th:text="${title}"></h1>
     </div>
      
     <div>
@@ -27,7 +34,8 @@
                 <tr>
                     <th>User ID</th>
                     <th>E-mail</th>
-                    <th>First Name</th>
+                    <th>Name</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,11 +43,53 @@
                     <td th:text="${student.id}">User ID</td>
                     <td th:text="${student.email}">E-mail</td>
                     <td th:text="${student.name}">Name</td>
+                    <td>
+                        <div>
+                            <a th:href="@{/removestudent(studentId=${student.id})}" th:name="${student.name}" class="fa-regular fa-trash-can icon-dark btn-delete" title="Remove this Student" id="btnDelete" ></a>
+                        </div>
+                    </td>
                 </tr>
                 <h3><a th:href="@{/userhome/active}">List of Active Users</a></h3>
             </tbody>
         </table>
     </div>
 </div>
+
+<div class="modal fade text-center" id="confirmModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+  
+        <div class="modal-body">
+          <span id="confirmText"></span>
+        </div>
+  
+        <div class="modal-footer">
+          <a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $(".btn-delete").on("click", function (e) {
+        e.preventDefault();
+        link = $(this);
+
+        name = link.attr("name");
+        $("#yesBtn").attr("href", link.attr("href"));
+        $("#confirmText").html("Do you want to remove the Student: \<strong\>" + name + "\<\/strong\>?");
+        $("#confirmModal").modal();
+      });
+    });
+  </script>
+
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.assessment.assessdemo.controllers;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ApiController {
     @Autowired
     private LoanController oLoanController;
 
-    @GetMapping("")
+    @GetMapping({"","/"})
     public String viewHomePage() {
         return "index";
     }
@@ -45,6 +46,7 @@ public class ApiController {
     public String userHomePage(Model oModel){
         List<Student> listUsers = oStudentController.checkAllStudentName();
         oModel.addAttribute("listUsers", listUsers);
+        oModel.addAttribute("title", "List of All Student");
         return "studentviews/index";
     }
 
@@ -81,11 +83,22 @@ public class ApiController {
         return "studentviews/usersuccessregister";
     }
 
+    @GetMapping("/removestudent")
+    public String removeStudent(@RequestParam int studentId){
+        String result = oStudentController.removeStudent(studentId);
+        if(result == "success"){
+            result = "redirect:/userhome/active";
+        } else {
+            result = "failprocess/student";
+        }
+        return "redirect:/userhome/active";
+    }
+
     @GetMapping("/userhome/active")
     public String studentGetActiveStudent(Model oModel) {
-        List<Student> listUsers = oStudentController.checkAllStudentName();
-        List<Student> rListUsers = listUsers.stream().filter(s -> s.getStatus() == 1).toList();
+        List<Student> rListUsers = oStudentController.checkAllStudentName();
         oModel.addAttribute("listUsers", rListUsers);
+        oModel.addAttribute("title", "List of Active Users");
         return "studentviews/index";
     }
 

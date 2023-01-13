@@ -19,7 +19,8 @@ public class StudentController {
     private LoanService oLoanService;
 
     public List<Student> checkAllStudentName(){
-        return oStudentService.checkAllStudentName();
+        List<Student> rListUsers = oStudentService.checkAllStudentName();
+        return rListUsers;
     }
 
     public void insertNewStudent(Student oStudent){
@@ -34,4 +35,10 @@ public class StudentController {
         int rCredit =  oLoanService.getStudentCreditFromLoan(oStudent);
         return rCredit;
     }
+
+    public String removeStudent(int studentId){
+        String result = oStudentService.removeStudent(studentId);
+        return result;
+    }
+
 }
