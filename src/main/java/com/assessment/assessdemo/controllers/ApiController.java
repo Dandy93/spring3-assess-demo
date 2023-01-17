@@ -52,7 +52,7 @@ public class ApiController {
 
     @GetMapping("/login")
     public String studentLoginForm(Model oModel) {
-        oModel.addAttribute("student", new Student());
+        oModel.addAttribute("student", new Student()); 
         return "studentviews/userlogin";
     }
 
